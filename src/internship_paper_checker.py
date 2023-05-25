@@ -2,6 +2,12 @@
 import streamlit as st
 import pandas as pd
 import difflib
+import openai
+import numpy as np
+import os
+from sentence_transformers import SentenceTransformer, util
+
+openai.api_key = os.environ["OPENAI_API_KEY"]
 
 
 class PaperChecker:
@@ -47,7 +53,7 @@ class PaperChecker:
             st.session_state.user_answer = ""
 
     def compute_and_show_results_callback(self):
-        for data_record, session_record in zip(self.data,st.session_state.user_answers):
+        for data_record, session_record in zip(self.data, st.session_state.user_answers):
             data_record['User_Answer'] = session_record
         self.compute_scores()
         self.show_results()
@@ -70,8 +76,25 @@ class PaperChecker:
             self.data[row]['Score'] = score
 
     def compute_score(self, text1, text2):
-        return difflib.SequenceMatcher(None, text1.lower(), text2.lower()).ratio()
+        # return difflib.SequenceMatcher(None, text1.lower(), text2.lower()).ratio()
 
+        # resp = openai.Embedding.create(
+        #     input=[text1.lower(), text2.lower()],
+        #     engine="text-similarity-davinci-001")
+        # embedding_a = resp['data'][0]['embedding']
+        # embedding_b = resp['data'][1]['embedding']
+        #
+        # similarity_score = np.dot(embedding_a, embedding_b)
+        # return similarity_score
+        sentences = [text1.lower(), text2.lower()]
+
+        model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+
+        # Compute embedding for both lists
+        embedding_1 = model.encode(sentences[0], convert_to_tensor=True)
+        embedding_2 = model.encode(sentences[1], convert_to_tensor=True)
+
+        return float(util.pytorch_cos_sim(embedding_1, embedding_2)[0][0])
 
     # In show_results, print results in table format.
     def show_results(self):
