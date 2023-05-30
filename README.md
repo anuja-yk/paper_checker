@@ -17,14 +17,16 @@
 
 ## Demonstration
 - User is presented with a question :
-![pic1]("./images/demo1.png")
+![pic1](./images/demo1.png)
 - User fills in the answer :
-![pic2]("./images/demo2.png")
+![pic2](./images/demo2.png)
 - User submits the answer, then the next question appears. This continues till all the questions are answered
 - After the last question, a ‘ View Score ’ button appears on the screen.
-![pic3]("./images/demo3.png")
+![pic3](./images/demo3.png)
 - After clicking the ‘ View Score ’ button, the user score is computed in the background and appears in a tabular format with final score percentage.
-![pic4]("./images/demo4.png")
+![pic4](./images/demo4.png)
+
+[![Watch the video](./images/thumbnail.png)](https://youtu.be/CZTsc84Lad4)
 
 ## Acknowledgements
 I would like to sincerely thank my mentor and father Dr. Yogesh Kulkarni for guiding me throughout this project. I also wish to thank my mother Anjali Kulkarni and my sister Anushka Kulkarni for resolving my queries. 
